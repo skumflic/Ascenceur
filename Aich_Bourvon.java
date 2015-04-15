@@ -21,6 +21,9 @@ public class Aich_Bourvon {
 	
 	
      
+    
+    
+    
               
         /**
         * Fonction du calcul de la presence d'une personne a chaque etage en un temps donne et en prenant en compte probabilite choisi par l'utilisateur.
