@@ -21,9 +21,6 @@ public class Aich_Bourvon {
 	
 	
      
-    
-    
-    
               
         /**
         * Fonction du calcul de la presence d'une personne a chaque etage en un temps donne et en prenant en compte probabilite choisi par l'utilisateur.
@@ -89,7 +86,7 @@ public class Aich_Bourvon {
 		boolean testMax = false;
 
 		for (i=0 ; i<ai.nE ; i++) {
-			if (tEA[i] == true && ((ai.nE-i-1)*30<=ai.pos)) {
+			if (tEA[i] == true && ((ai.nE-i-1)*30<ai.pos)) {
 				testMax = true;
 			}
 		}
@@ -115,6 +112,28 @@ public class Aich_Bourvon {
 		}
 		return testMin;
 	}
+	
+	
+	/**
+	* Fonction qui teste si il y'a un appel au meme etage de la position de l'ascenceur
+	* @param ai represente l'ascenceur 
+	* @param tEA represente le tableau de boolean des etages ou il y'a au moins une personne
+	* @return test un boolean si il y'a un appel plus bas
+	**/
+	
+	static boolean testAppelEgale (Ascenceur ai, boolean tEA[]) {
+		
+		int i;
+		boolean testEgale = false;
+
+		for (i=0 ; i<ai.nE ; i++) {
+			if (tEA[i] == true && ((ai.nE-i-1)*30==ai.pos)) {
+				testEgale = true;
+			}
+		}
+		return testEgale;
+	}
+	
 	
 	/**
 	* Fonction qui deplace l'ascenceur suivant la direction choisie
@@ -223,6 +242,7 @@ public class Aich_Bourvon {
 		int min = 0;
 		boolean testMax;
 		boolean testMin;
+		boolean testEgale;
                 boolean end = false;
 		boolean ap;
 		
@@ -291,6 +311,7 @@ public class Aich_Bourvon {
 
 				testMax = testAppelPlusHaut (ai, tEA);
 				testMin = testAppelPlusBas (ai, tEA);
+				testEgale = testAppelEgale (ai, tEA);
 			
 
 			
@@ -330,8 +351,20 @@ public class Aich_Bourvon {
 					EcranGraphique.drawLine(525,80,530,85);
 					EcranGraphique.drawLine(535,80,530,85);
 				}	
-
-				x = 0 ;
+				
+				else if (ai.dir == 0) {
+					if (testEgale == true) {
+						monte (ai, tE, tEA, tNbPE);
+					}
+					else if (testMin == false && testMax == true) {
+						ai.dir = 1;
+					}
+					else if (testMax == false && testMin == true) {
+						ai.dir = -1;
+					}
+				}
+				
+				x = 0;
 				j = 0;
 
 					
